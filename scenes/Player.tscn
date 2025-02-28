@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://bu6534pr6npo6"]
+
+[ext_resource type="Script" path="res://scenes/Player.gd" id="1_w2s8h"]
+[ext_resource type="Texture2D" uid="uid://d2to1aj6m7mgl" path="res://assets/kenney_platformercharacters/PNG/Adventurer/adventurer_tilesheet.png" id="2_550uu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hdo0g"]
+size = Vector2(62, 92)
+
+[sub_resource type="Animation" id="Animation_cq3l5"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q2p8f"]
+_data = {
+"idle": SubResource("Animation_cq3l5")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pvjs"]
+atlas = ExtResource("2_550uu")
+region = Rect2(0, 0, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_naieb"]
+atlas = ExtResource("2_550uu")
+region = Rect2(80, 0, 80, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_juxxx"]
+atlas = ExtResource("2_550uu")
+region = Rect2(160, 0, 80, 110)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7ln5p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6pvjs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_naieb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_juxxx")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_w2s8h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 8)
+shape = SubResource("RectangleShape2D_hdo0g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_550uu")
+hframes = 9
+vframes = 3
+
+[node name="DashCheck" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="DashDuration" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q2p8f")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_7ln5p")
+animation = &"run"
+frame_progress = 0.0816839
+
+[connection signal="timeout" from="DashCheck" to="." method="_on_dash_timeout"]
+[connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
