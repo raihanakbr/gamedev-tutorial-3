@@ -72,11 +72,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 
 	move_and_slide()
-	
+
 	if raycast.is_colliding():
 		var collider = raycast.get_collider()
-		if (collider != null):
-			if (collider.name == "Slime"):
+		if collider != null:
+			if collider.name == "Slime":
 				collider.queue_free()
 				velocity.y = 0.6 * jump_speed
 				$EnemyDeathIyaSeharunyaGaTaroSini.play()
@@ -108,7 +108,8 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	on_dash_cooldown = false
-	
+
+
 func _anim() -> void:
 	if velocity.x != 0:
 		sprite.play("run")
