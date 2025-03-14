@@ -12,14 +12,17 @@ var on_dash_cooldown = false
 var is_dashing = false
 var dash_direction = true  #true for right and false for left
 
-@onready var sprite = $Sprite2D
+@onready var sprite = $AnimatedSprite2D
 @onready var dash_timer = $DashCheck
 @onready var dash_duration_timer = $DashDuration
 @onready var dash_cooldown_timer = $DashCooldown
+@onready var jump_audio = $AudioStreamPlayer2D
+@onready var raycast = $RayCast2D
 
 
 func _physics_process(delta: float) -> void:
 	_crouch()
+	_anim()
 
 	if is_on_floor():
 		can_double_jump = true
@@ -28,9 +31,11 @@ func _physics_process(delta: float) -> void:
 
 	if is_on_floor() and Input.is_action_just_pressed("ui_up"):
 		velocity.y = jump_speed
+		jump_audio.play()
 
 	if not is_on_floor() and can_double_jump and Input.is_action_just_pressed("ui_up"):
 		velocity.y = 0.8 * jump_speed
+		jump_audio.play()
 		can_double_jump = false
 
 	if Input.is_action_just_released("ui_right") and not on_dash_cooldown:
@@ -67,6 +72,15 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 
 	move_and_slide()
+	
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		if (collider != null):
+			if (collider.name == "Slime"):
+				collider.queue_free()
+				velocity.y = 0.6 * jump_speed
+				$EnemyDeathIyaSeharunyaGaTaroSini.play()
+				print("Raycast hit: ", collider.name)
 
 
 func _crouch():
@@ -94,3 +108,9 @@ func _on_dash_duration_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	on_dash_cooldown = false
+	
+func _anim() -> void:
+	if velocity.x != 0:
+		sprite.play("run")
+	else:
+		sprite.play("default")
