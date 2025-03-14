@@ -68,11 +68,21 @@ Semua Implementasi adalah pure hasil kerja saya sendiri dari pengalaman, sehingg
 Membuat minimal 1 (satu) objek baru di dalam permainan yang dilengkapi dengan animasi menggunakan spritesheet selain yang disediakan tutorial. Silakan cari spritesheet animasi di beberapa koleksi aset gratis seperti Kenney.
 
 Object yang dibuat adalah slime, dengan animasi idle.
+![image](https://github.com/user-attachments/assets/ceeea596-5ed5-4cf2-8e87-323fc7451c8f)
 
 Membuat minimal 1 (satu) audio untuk efek suara (SFX) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
+SFXnya diimplementasikan di Player, ketika player jump maka akan ada sfx jump.
+
 Membuat minimal 1 (satu) musik latar (background music) dan memasukkannya ke dalam permainan. Kamu dapat membuatnya sendiri atau mencari dari koleksi aset gratis.
+Implementasi BGM menggunakan AudioStreamPlayer2D yang bisa di dengar di manapun player berada.
+
 Implementasikan interaksi antara objek baru tersebut dengan objek yang dikendalikan pemain. Misalnya, pemain dapat menciptakan atau menghilangkan objek baru tersebut ketika menekan suatu tombol atau tabrakan dengan objek lain di dunia permainan.
+![image](https://github.com/user-attachments/assets/6e155a0d-da29-45fe-a4ce-0192d3e0f089)
+Ketika player menginjak slime (dari atas), maka otomatis slime akan mati
+
 Implementasikan audio feedback dari interaksi antara objek baru dengan objek pemain. Misalnya, muncul efek suara ketika pemain tabrakan dengan objek baru.
 Beberapa ide lain yang bisa kamu coba kerjakan di luar latihan mandiri:
+Ketika slime mati diinjak player, akan mengeluarkan sfx slime mati
 
 Implementasi sistem audio yang relatif terhadap posisi objek. Misalnya, musik latar akan semakin terdengar samar ketika pemain semakin jauh dari posisi awal level.
+Ada sfx slime noise, semakin jauh player dari slime, maka sfx tersebut akan terdengar lebih kecil
